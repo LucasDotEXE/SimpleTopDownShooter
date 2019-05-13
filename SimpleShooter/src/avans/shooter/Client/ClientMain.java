@@ -22,7 +22,6 @@ public class ClientMain extends Application {
         primaryStage.initStyle(StageStyle.TRANSPARENT);
 
         openLogin(primaryStage);
-
         primaryStage.show();
     }
 
