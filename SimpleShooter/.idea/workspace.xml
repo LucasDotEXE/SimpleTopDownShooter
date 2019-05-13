@@ -140,11 +140,19 @@
       </list>
     </option>
   </component>
+<<<<<<< Updated upstream
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
     <option name="y" value="-10" />
     <option name="width" value="1614" />
     <option name="height" value="878" />
+=======
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
+>>>>>>> Stashed changes
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -152,15 +160,24 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+<<<<<<< Updated upstream
       <pane id="AndroidView" />
       <pane id="PackagesPane" />
       <pane id="Scope" />
+=======
+      <pane id="PackagesPane" />
+>>>>>>> Stashed changes
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="SimpleShooter" type="b2602c69:ProjectViewProjectNode" />
               <item name="SimpleShooter" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SimpleShooter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SimpleShooter" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="SimpleShooter" type="b2602c69:ProjectViewProjectNode" />
@@ -196,6 +213,7 @@
           <select />
         </subPane>
       </pane>
+<<<<<<< Updated upstream
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -206,6 +224,15 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Git Kraken Repo's\AvansTI\NetworkProgramming\SimpleTopDownShooter\SimpleShooter\src\avans\shooter\Client" />
     </key>
+=======
+      <pane id="AndroidView" />
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557497350917" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+>>>>>>> Stashed changes
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
