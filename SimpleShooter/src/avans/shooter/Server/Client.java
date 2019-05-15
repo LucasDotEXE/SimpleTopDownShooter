@@ -36,7 +36,7 @@ public class Client implements Runnable {
             this.in  = new DataInputStream( this.socket.getInputStream() );
             this.out = new DataOutputStream( this.socket.getOutputStream() );
 
-            out.writeUTF("Avans ChatServer 1.2.3.4");
+            out.writeUTF("ShooterServer 1.0.0");
 
             this.name = in.readUTF();
             System.out.println("(E) " + this.name + " joined the Server!");

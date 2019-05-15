@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="155.0" prefWidth="175.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="155.0" prefWidth="175.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="avans.shooter.Deprecated.UIControllers.LoginController">
    <center>
       <VBox alignment="CENTER" prefHeight="216.0" prefWidth="305.0" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
@@ -17,23 +17,23 @@
             <HBox alignment="CENTER" prefHeight="25.0" prefWidth="266.0" spacing="5.0">
                <children>
                   <Label text="Name: " />
-                  <TextField alignment="TOP_LEFT" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField alignment="TOP_LEFT" prefHeight="25.0" prefWidth="100.0" fx:id="nameInput"/>
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="25.0" prefWidth="266.0" spacing="5.0">
                <children>
                   <Label alignment="BASELINE_CENTER" text="Port Nr:" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
-                  <TextField prefHeight="25.0" prefWidth="100.0" />
+                  <TextField prefHeight="25.0" prefWidth="100.0" fx:id="portInput"/>
                </children>
             </HBox>
             <HBox alignment="TOP_CENTER" prefHeight="25.0" prefWidth="266.0" spacing="5.0">
                <children>
-                  <Button mnemonicParsing="false" text="Connect" fx:id="ConnectButton">
+                  <Button mnemonicParsing="false" text="Connect" fx:id="connect">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
                   </Button>
-                  <Button cancelButton="true" mnemonicParsing="false" text="Close" fx:id="Close"/>
+                  <Button cancelButton="true" mnemonicParsing="false" text="Close" fx:id="close"/>
                </children>
             </HBox>
          </children>
