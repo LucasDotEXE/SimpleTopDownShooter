@@ -1,17 +1,21 @@
 package avans.shooter.Server;
 
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import avans.shooter.ConnectionTools.DataPacket;
+import avans.shooter.ConnectionTools.Request.Request;
+import avans.shooter.ConnectionTools.Responce.Responce;
+import avans.shooter.ConnectionTools.ServerSide.RequestHandler;
+import avans.shooter.ConnectionTools.ServerSide.ResponceHandler;
+
+import java.io.*;
 import java.net.Socket;
 
 public class Client implements Runnable {
 
     private Socket socket;
     private ShooterServer server;
-    private DataOutputStream out;
-    private DataInputStream in;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
     private String name;
 
     public Client ( Socket socket, ShooterServer server ) {
@@ -33,16 +37,27 @@ public class Client implements Runnable {
     @Override
     public void run() {
         try {
-            this.in  = new DataInputStream( this.socket.getInputStream() );
-            this.out = new DataOutputStream( this.socket.getOutputStream() );
+            this.in  = new ObjectInputStream( this.socket.getInputStream() );
+            this.out = new ObjectOutputStream( this.socket.getOutputStream() );
 
             out.writeUTF("ShooterServer 1.0.0");
-
-            this.name = in.readUTF();
             System.out.println("(E) " + this.name + " joined the Server!");
 
             String message = "";
             while ( !message.equals("stop") ) {
+                try {
+                    DataPacket data = (DataPacket) this.in.readObject();
+                    if (data.isRequest()) {
+                        RequestHandler.handle((Request) data, this.server);
+                    } else {
+                        if (data.isResponce()) {
+                            ResponceHandler.handle((Responce) data, this.server);
+                        }
+                    }
+
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
 
                 //The update's/data-transfer should go here
 //                message = in.readUTF();   //incoming data

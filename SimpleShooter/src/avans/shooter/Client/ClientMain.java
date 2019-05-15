@@ -36,6 +36,6 @@ public class ClientMain extends Application {
 //    }
 
     public void openLobby(ShooterClient client) {
-        client.
+
     }
 }

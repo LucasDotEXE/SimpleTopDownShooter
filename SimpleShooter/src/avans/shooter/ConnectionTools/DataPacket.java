@@ -3,7 +3,7 @@ package avans.shooter.ConnectionTools;
 import avans.shooter.ConnectionTools.Responce.ResponceType;
 import avans.shooter.ConnectionTools.Request.RequestType;
 
-public abstract class DataPacket implements DataPacketInterface {
+public abstract class DataPacket {
 
 
     private ResponceType responceType;
@@ -12,14 +12,6 @@ public abstract class DataPacket implements DataPacketInterface {
     public DataPacket(ResponceType responceType, RequestType requestType) {
         this.responceType = responceType;
         this.requestType = requestType;
-    }
-
-    public ResponceType open() {
-        return null;
-    }
-
-    protected void setResponceType(ResponceType responceType) {
-        this.responceType = responceType;
     }
 
     public boolean isRequest() {

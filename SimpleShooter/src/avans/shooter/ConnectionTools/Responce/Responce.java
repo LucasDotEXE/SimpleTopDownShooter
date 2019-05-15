@@ -1,10 +1,15 @@
 package avans.shooter.ConnectionTools.Responce;
 
-public class Responce<T> {
+import avans.shooter.ConnectionTools.DataPacket;
+
+public class Responce<T> extends DataPacket {
 
     private T data;
 
-    public Responce(T data) {
+    public Responce(T data, ResponceType responceType) {
+        super(responceType, null);
         this.data = data;
     }
+
+
 }
