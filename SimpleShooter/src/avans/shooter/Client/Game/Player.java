@@ -1,7 +1,6 @@
 package avans.shooter.Client.Game;
 
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -13,60 +12,61 @@ public class Player implements GameObject{
     private Point2D position;
     private double diameter;
     private int speed;
-    private String direction;
-    private Shape player;
+
 
     public Player(int x, int y, int d, int s){
-
         this.position = new Point2D.Double(x,y);
         this.diameter = d;
         this.speed = s;
-        this.player = new Ellipse2D.Double(x-5, y-5, 10, 10);
     }
 
     @Override
     public void draw(Graphics2D g2d) {
         AffineTransform af = new AffineTransform();
         af.setToTranslation(this.position.getX(), this.position.getY());
-        g2d.fill(this.player);
+        Ellipse2D player = new Ellipse2D.Double(this.position.getX() - this.diameter/2, this.position.getY() - this.diameter/2, this.diameter, this.diameter);
+        g2d.fill(player);
     }
 
     @Override
     public void update(double deltatime) {
-        this.position = new Point2D.Double(this.position.getX(), this.position.getY());
-        if (this.direction == "d" && this.position.getX() < 1000) {
+        GameController.keyLisner.getKeys().forEach(keyCode -> {
+            moveInDirection(keyCode, deltatime);
+        });
+    }
+
+    private void moveInDirection(KeyCode direction, double deltatime) {
+        if (direction == KeyCode.D && this.position.getX() < 1000) {
             setPosition((int) this.position.getX() + (int) (this.speed* (deltatime / 10000)), (int) this.position.getY());
-        } else if (this.direction == "a" && this.position.getX() > 10) {
+        } else if (direction == KeyCode.A && this.position.getX() > 10) {
             setPosition((int) this.position.getX() - (int) (this.speed * (deltatime / 10000)), (int) this.position.getY());
-        } else  if (this.direction == "w" && this.position.getY() > 10){
+        } else  if (direction == KeyCode.W && this.position.getY() > 10){
             setPosition((int) this.position.getX(), (int) this.position.getY() - (int)(this.speed*(deltatime/10000)));
-        } else  if (this.direction == "s" && this.position.getY() < 1000) {
+        } else  if (direction == KeyCode.S && this.position.getY() < 1000) {
             setPosition((int) this.position.getX(), (int) this.position.getY() + (int)(this.speed*(deltatime/10000)));
         } else setPosition((int) this.position.getX(), (int) this.position.getY());
-        this.player = new Ellipse2D.Double(this.position.getX() - this.diameter/2, this.position.getY() - this.diameter/2, this.diameter, this.diameter);
-
     }
 
     public void setPosition(int x, int y) {
         this.position.setLocation(x, y);
     }
 
-    public void setDirection(String di) {
-        this.direction = di;
-    }
+//    public void setDirection(String di) {
+//        this.direction = di;
+//    }
 
-    public void keyTyped(KeyEvent e) {
-        if(e.getCode() == KeyCode.A) {
-            setDirection("a");
-        } else if (e.getCode() == KeyCode.D) {
-            setDirection("d");
-        } else if (e.getCode() == KeyCode.W) {
-            setDirection("w");
-        } else if (e.getCode() == KeyCode.S) {
-            setDirection("s");
-        } else {setDirection("o"); }
-    }
-    /*public Player(int x, int y, int d, int s , String u, String t, String l, String r){
+//    public void keyTyped(KeyEvent e) {
+//        if(e.getCode() == KeyCode.A) {
+//            setDirection("a");
+//        } else if (e.getCode() == KeyCode.D) {
+//            setDirection("d");
+//        } else if (e.getCode() == KeyCode.W) {
+//            setDirection("w");
+//        } else if (e.getCode() == KeyCode.S) {
+//            setDirection("s");
+//        } else {setDirection("o"); }
+//    }
+   /*public Player(int x, int y, int d, int s , String u, String t, String l, String r){
 
         this.diameter = d;
         this.position = new Point2D.Double(x,y);

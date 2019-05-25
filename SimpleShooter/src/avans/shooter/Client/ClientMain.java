@@ -36,6 +36,7 @@ public class ClientMain extends Application {
 //    }
 
     public void openLobby(ShooterClient client) {
-
+        System.out.println("Lobby oppened");
+        System.exit(100);
     }
 }

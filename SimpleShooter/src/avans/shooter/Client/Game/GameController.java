@@ -13,11 +13,16 @@ import java.awt.*;
 
 public class GameController extends Application{
 
+
+
+    private Game game;
+
     private ResizableCanvas canvas;
-    private Player player;
+    public static MultyKeyLisner keyLisner;
 
     @Override
     public void start(Stage stage) {
+
 
         BorderPane mainPane = new BorderPane();
         canvas = new ResizableCanvas(g -> draw(g), mainPane);
@@ -38,7 +43,15 @@ public class GameController extends Application{
         }.start();
 
         // Mouse Events
-        canvas.setOnKeyPressed(e -> keyTyped(e));
+        this.keyLisner = new MultyKeyLisner();
+        canvas.setOnKeyPressed(e -> {
+            keyLisner.keyPressed(e);
+//            keyLisner.getKeys().forEach(keyCode -> System.out.println(keyCode.getName()));
+        });
+        canvas.setOnKeyReleased(event -> {
+            keyLisner.keyReleased(event);
+//            keyLisner.getKeys().forEach(keyCode -> System.out.println(keyCode.getName()));
+        });
         canvas.setFocusTraversable(true); // make sure we have focus for key events
 
         Scene scene = new Scene(mainPane, 1000, 1000);
@@ -48,28 +61,22 @@ public class GameController extends Application{
         stage.setResizable(false);
         //draw(g2d);
 
-        scene.setOnKeyPressed(event -> {
-            keyTyped(event);
-        });
     }
 
-    private void keyTyped(KeyEvent e) {
-        this.player.keyTyped(e);
-    }
 
 
     public void init() {
-        player = new Player(10,40,  10, 2);
+        this.game = new Game();
     }
 
     private void draw(FXGraphics2D g2d) {
         g2d.clearRect(0,0,2000,2000);
         g2d.setColor(Color.WHITE);
-        player.draw(g2d);
+        this.game.draw(g2d);
     }
 
     private void update(double deltaTime) {
-        player.update(deltaTime);
+        this.game.update(deltaTime);
     }
 
     public static void main(String[] args) {

@@ -9,6 +9,7 @@ import avans.shooter.ConnectionTools.ServerSide.ResponceHandler;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class Client implements Runnable {
 
@@ -68,7 +69,11 @@ public class Client implements Runnable {
 
             this.socket.close();
 
+        } catch (SocketException e) {
+            System.out.println("cought wrong");
+            e.printStackTrace();
         } catch (IOException e) {
+            System.out.println("Cought right");
             e.printStackTrace();
         }
 

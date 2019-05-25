@@ -1,5 +1,7 @@
 package avans.shooter.Server;
 
+import avans.shooter.Client.Game.Player;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -12,6 +14,9 @@ public class ShooterServer {
     private Thread serverThread;
     private ArrayList<Client> clients;
     private ArrayList<Thread> threads;
+
+    private ArrayList<Player> players;
+
 
     public ShooterServer(int port) {
         this.port = port;
