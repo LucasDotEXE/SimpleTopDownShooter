@@ -33,14 +33,19 @@ public class Client implements Runnable {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+
+
     }
 
     @Override
     public void run() {
         try {
+            System.out.println("making inputsteam");
             this.in  = new ObjectInputStream( this.socket.getInputStream() );
+            System.out.println("making outputstream");
             this.out = new ObjectOutputStream( this.socket.getOutputStream() );
 
+            System.out.println("sent shooterId");
             out.writeUTF("ShooterServer 1.0.0");
             System.out.println("(E) " + this.name + " joined the Server!");
 
@@ -70,13 +75,12 @@ public class Client implements Runnable {
             this.socket.close();
 
         } catch (SocketException e) {
-            System.out.println("cought wrong");
+            System.out.println("Player Disconnected");
+            this.server.removeClient(this);
             e.printStackTrace();
         } catch (IOException e) {
-            System.out.println("Cought right");
             e.printStackTrace();
         }
-
     }
 }
 

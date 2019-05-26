@@ -1,8 +1,6 @@
 package avans.shooter.Client;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -22,15 +20,17 @@ public class ShooterClient {
     public boolean connect () {
         try {
             this.socket = new Socket(this.host, this.port);
-
-            DataInputStream in = new DataInputStream( this.socket.getInputStream() );
-            DataOutputStream out = new DataOutputStream( this.socket.getOutputStream() );
+            System.out.println("I made Socket");
+            ObjectInputStream in = new ObjectInputStream(this.socket.getInputStream());
+            System.out.println("I made in stream");
+            ObjectOutputStream out = new ObjectOutputStream( this.socket.getOutputStream() );
+            System.out.println("I made out stream");
 
             Scanner scanner = new Scanner( System.in );
 
             String server = in.readUTF();
             System.out.println(server);
-
+            System.out.println("ik schrijf naam");
             out.writeUTF(this.name);
 
             new Thread ( () -> {
@@ -61,5 +61,9 @@ public class ShooterClient {
         }
 
         return true;
+    }
+
+    public int getPort() {
+        return this.port;
     }
 }

@@ -37,9 +37,7 @@ public class LoginScreen implements LoadableScene {
         intitComponents();
         formatAll();
         setFunction();
-
         this.parent = clientMain;
-
     }
 
     private void setFunction() {

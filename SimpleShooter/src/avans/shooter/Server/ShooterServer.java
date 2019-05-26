@@ -67,4 +67,8 @@ public class ShooterServer {
 
         return true;
     }
+
+    public void removeClient(Client client) {
+        this.clients.remove(client);
+    }
 }

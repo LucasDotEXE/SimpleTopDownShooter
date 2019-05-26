@@ -1,5 +1,6 @@
 package avans.shooter.Client;
 
+import avans.shooter.Client.UIScenes.LobbyScreen;
 import avans.shooter.Client.UIScenes.LoginScreen;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -37,6 +38,7 @@ public class ClientMain extends Application {
 
     public void openLobby(ShooterClient client) {
         System.out.println("Lobby oppened");
-        System.exit(100);
+        new LobbyScreen(client);
+        System.exit(1);
     }
 }
