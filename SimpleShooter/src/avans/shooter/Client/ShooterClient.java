@@ -1,5 +1,6 @@
 package avans.shooter.Client;
 
+import avans.shooter.Client.UIScenes.LobbyScreen;
 import avans.shooter.ConnectionTools.ClientSide.RequestHandler;
 import avans.shooter.ConnectionTools.ClientSide.ResponceHandler;
 import avans.shooter.ConnectionTools.DataPacket;
@@ -9,20 +10,23 @@ import avans.shooter.ConnectionTools.Responce.Responce;
 import java.io.*;
 import java.net.Socket;
 
-public class ShooterClient {
+public class ShooterClient implements Serializable {
 
-    private int port;
-    private Socket socket;
-    private String host;
+    private transient int port;
+    private transient Socket socket;
+    private transient String host;
     private String name;
 
-    private ObjectOutputStream out;
-    private ObjectInputStream in;
+    private transient ObjectOutputStream out;
+    private transient ObjectInputStream in;
+
+    private transient LobbyScreen lobby;
 
     public ShooterClient(int port, String host, String name) {
         this.port = port;
         this.host = host;
         this.name = name;
+        this.lobby = null;
     }
 
     public boolean connect () {
@@ -63,7 +67,7 @@ public class ShooterClient {
 
     public void sentDataPacket(DataPacket dataPacket) {
         try {
-            this.out.writeObject(dataPacket);
+            out.writeObject(dataPacket);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -91,5 +95,17 @@ public class ShooterClient {
                 }
             }
         }).start();
+    }
+
+    public void setLobby(LobbyScreen lobby) {
+        this.lobby = lobby;
+    }
+
+    public LobbyScreen getLobby() {
+        return lobby;
+    }
+
+    public String getName() {
+        return name;
     }
 }

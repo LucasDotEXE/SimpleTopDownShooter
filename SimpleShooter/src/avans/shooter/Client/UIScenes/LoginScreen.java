@@ -57,6 +57,10 @@ public class LoginScreen implements LoadableScene {
             alert.showAndWait();
         }
         });
+
+        this.close.setOnAction(event -> {
+            System.exit(0);
+        });
     }
 
     private void formatAll() {

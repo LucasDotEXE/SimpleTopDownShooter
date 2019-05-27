@@ -76,14 +76,25 @@ public class Client implements Runnable {
             this.socket.close();
 
         } catch (SocketException e) {
-            System.out.println("Player Disconnected");
+            System.out.println(this.name + " Disconnected");
             this.server.removeClient(this);
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void sentDataPacket(DataPacket dataPacket) {
+        try {
+            this.out.writeObject(dataPacket);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getName() {
+        return name;
     }
 }
 

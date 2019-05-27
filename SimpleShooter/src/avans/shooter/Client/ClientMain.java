@@ -28,7 +28,17 @@ public class ClientMain extends Application {
         primaryStage.show();
     }
 
-//    private void loadLogin(Stage primaryStage) {
+
+    public void startGame(ShooterClient client) {
+
+    }
+
+    public void openLobby(ShooterClient client) {
+        System.out.println("Lobby oppened");
+        new LobbyScreen(client, this).loadScene(primaryStage);
+    }
+
+    //    private void loadLogin(Stage primaryStage) {
 //        Parent root = null;
 //        try {
 //            root = FXMLLoader.load(getClass().getResource("../Deprecated/LoginScreen.fxml"));
@@ -37,9 +47,4 @@ public class ClientMain extends Application {
 //            e.printStackTrace();
 //        }
 //    }
-
-    public void openLobby(ShooterClient client) {
-        System.out.println("Lobby oppened");
-        new LobbyScreen(client).loadScene(primaryStage);
-    }
 }

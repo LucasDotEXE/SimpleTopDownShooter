@@ -1,5 +1,7 @@
 package avans.shooter.ConnectionTools.Responce;
 
-public enum ResponceType {
+import java.io.Serializable;
+
+public enum ResponceType implements Serializable {
     lobbyStatus, playerPos, totalgame
 }

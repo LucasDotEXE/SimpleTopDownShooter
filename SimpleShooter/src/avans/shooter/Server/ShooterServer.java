@@ -71,4 +71,8 @@ public class ShooterServer {
     public void removeClient(Client client) {
         this.clients.remove(client);
     }
+
+    public ArrayList<Client> getClients() {
+        return clients;
+    }
 }
