@@ -1,7 +1,5 @@
 package avans.shooter.Client.Game;
 
-import javafx.scene.input.KeyEvent;
-import org.jfree.fx.ResizableCanvas;
 
 import java.awt.*;
 import java.util.ArrayList;

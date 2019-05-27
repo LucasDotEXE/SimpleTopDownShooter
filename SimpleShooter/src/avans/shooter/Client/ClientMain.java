@@ -13,6 +13,7 @@ import java.io.IOException;
 
 public class ClientMain extends Application {
 
+    private Stage primaryStage;
 
     public static void main(String[] args) {
         launch(args);
@@ -20,6 +21,7 @@ public class ClientMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        this.primaryStage = primaryStage;
         setUserAgentStylesheet(STYLESHEET_CASPIAN);
         LoginScreen loginScreen = new LoginScreen(this);
         loginScreen.loadScene(primaryStage);
@@ -38,7 +40,6 @@ public class ClientMain extends Application {
 
     public void openLobby(ShooterClient client) {
         System.out.println("Lobby oppened");
-        new LobbyScreen(client);
-        System.exit(1);
+        new LobbyScreen(client).loadScene(primaryStage);
     }
 }

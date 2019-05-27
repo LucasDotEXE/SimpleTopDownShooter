@@ -51,6 +51,10 @@ public class Player implements GameObject{
         this.position.setLocation(x, y);
     }
 
+    public Point2D getPos() {
+        return this.position;
+    }
+
 //    public void setDirection(String di) {
 //        this.direction = di;
 //    }

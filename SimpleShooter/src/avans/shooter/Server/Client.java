@@ -45,8 +45,9 @@ public class Client implements Runnable {
             System.out.println("making outputstream");
             this.out = new ObjectOutputStream( this.socket.getOutputStream() );
 
+            out.writeObject("ShooterServer 1.0.0");
             System.out.println("sent shooterId");
-            out.writeUTF("ShooterServer 1.0.0");
+            this.name = (String) in.readObject();
             System.out.println("(E) " + this.name + " joined the Server!");
 
             String message = "";
@@ -79,6 +80,8 @@ public class Client implements Runnable {
             this.server.removeClient(this);
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

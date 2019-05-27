@@ -22,7 +22,6 @@ public class LobbyScreen implements LoadableScene{
     @Override
     public void loadScene(Stage primaryStage) {
         primaryStage.setScene(new Scene(layout));
-
     }
 
     public LobbyScreen(ShooterClient client) {
@@ -31,12 +30,17 @@ public class LobbyScreen implements LoadableScene{
     }
 
     private void initLayout() {
+        this.layout = new BorderPane();
+
         this.nameList = new VBox();
         this.leftList = new VBox();
 
         this.play_Button = new Button();
         this.leftList.getChildren().addAll(new Label("Port Nr:" + this.client.getPort()), this.play_Button);
 
+
+        this.layout.setLeft(this.leftList);
+        this.layout.setRight(this.nameList);
         loadNameList();
     }
 

@@ -105,7 +105,6 @@ public class LoginScreen implements LoadableScene {
 
     @Override
     public void loadScene(Stage primaryStage) {
-        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setScene(new Scene(layout, 175, 155));
     }
 
