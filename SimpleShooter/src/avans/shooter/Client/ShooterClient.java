@@ -1,5 +1,7 @@
 package avans.shooter.Client;
 
+import avans.shooter.Client.Game.GameObject;
+import avans.shooter.Client.Game.Player;
 import avans.shooter.Client.UIScenes.LobbyScreen;
 import avans.shooter.ConnectionTools.ClientSide.RequestHandler;
 import avans.shooter.ConnectionTools.ClientSide.ResponceHandler;
@@ -9,6 +11,7 @@ import avans.shooter.ConnectionTools.Responce.Responce;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ShooterClient implements Serializable {
 
@@ -20,9 +23,14 @@ public class ShooterClient implements Serializable {
     private transient ObjectOutputStream out;
     private transient ObjectInputStream in;
 
+    private transient ArrayList<GameObject> serverData;
+    private transient  ArrayList<Player> otherPlayers;
+
     private transient LobbyScreen lobby;
 
     public ShooterClient(int port, String host, String name) {
+        this.serverData = new ArrayList<>();
+        this.otherPlayers = new ArrayList<>();
         this.port = port;
         this.host = host;
         this.name = name;
@@ -108,4 +116,17 @@ public class ShooterClient implements Serializable {
     public String getName() {
         return name;
     }
+
+    public synchronized ArrayList<GameObject> getServerData() {
+        ArrayList<GameObject> serverData = new ArrayList<>();
+        if (this.otherPlayers != null) {
+            serverData.addAll(this.otherPlayers);
+        }
+        return serverData;
+    }
+
+    public synchronized void setOtherPlayers(ArrayList<Player> players) {
+        this.otherPlayers = players;
+    }
+
 }

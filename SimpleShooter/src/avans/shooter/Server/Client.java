@@ -58,7 +58,7 @@ public class Client implements Runnable {
                         RequestHandler.handle((Request) data, this.server);
                     } else {
                         if (data.isResponce()) {
-                            ResponceHandler.handle((Responce) data, this.server);
+                            ResponceHandler.handle((Responce) data, this.server, this);
                         }
                     }
 
@@ -85,7 +85,7 @@ public class Client implements Runnable {
         }
     }
 
-    public void sentDataPacket(DataPacket dataPacket) {
+    public synchronized void sentDataPacket(DataPacket dataPacket) {
         try {
             this.out.writeObject(dataPacket);
         } catch (IOException e) {

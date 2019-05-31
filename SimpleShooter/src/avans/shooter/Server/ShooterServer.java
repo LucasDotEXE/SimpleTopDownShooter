@@ -1,11 +1,14 @@
 package avans.shooter.Server;
 
 import avans.shooter.Client.Game.Player;
+import avans.shooter.ConnectionTools.Responce.Responce;
+import avans.shooter.ConnectionTools.Responce.ResponceType;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ShooterServer {
 
@@ -15,10 +18,11 @@ public class ShooterServer {
     private ArrayList<Client> clients;
     private ArrayList<Thread> threads;
 
-    private ArrayList<Player> players;
+    private ServerGameData gameData;
 
 
     public ShooterServer(int port) {
+        this.gameData = new ServerGameData(this);
         this.port = port;
         this.clients = new ArrayList<>();
         this.threads = new ArrayList<>();
@@ -74,5 +78,23 @@ public class ShooterServer {
 
     public ArrayList<Client> getClients() {
         return clients;
+    }
+
+    public ServerGameData getGameData() {
+        return this.gameData;
+    }
+
+    public void updatePlayerPos(HashMap<String, Player> playerHashMap) {
+//        System.out.println("update player Pos: ");
+//        playerHashMap.forEach((s, player) -> System.out.println(s + " pos: " + player.getPos()));
+        for (Client client: this.clients) {
+            ArrayList<Player> players = new ArrayList();
+            playerHashMap.forEach((s, player) -> {
+                if (s != client.getName()){
+                    players.add(player);
+                }
+            });
+            client.sentDataPacket(new Responce<ArrayList<Player>>(players, ResponceType.player));
+        }
     }
 }

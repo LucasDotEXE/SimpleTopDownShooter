@@ -1,32 +1,42 @@
-package avans.shooter.Client.Game;
+package avans.shooter.Client.UIScenes;
 
+import avans.shooter.Client.ClientMain;
+import avans.shooter.Client.Game.Game;
+import avans.shooter.Client.Game.GameObject;
+import avans.shooter.Client.Game.MultyKeyLisner;
+import avans.shooter.Client.ShooterClient;
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
 
 import java.awt.*;
+import java.util.ArrayList;
 
-public class GameController extends Application{
+public class GameScreen implements LoadableScene {
 
-
-
+    private ClientMain parent;
+    private ShooterClient client;
     private Game game;
 
-
-
+    private BorderPane mainpane;
     private ResizableCanvas canvas;
     public static MultyKeyLisner keyLisner;
 
+    public GameScreen(ShooterClient client, ClientMain clientMain) {
+        init(client);
+        this.parent = clientMain;
+        this.client = client;
+    }
+
     @Override
-    public void start(Stage stage) {
-        BorderPane mainPane = new BorderPane();
-        canvas = new ResizableCanvas(g -> draw(g), mainPane);
-        mainPane.setCenter(canvas);
+    public void loadScene(Stage stage) {
+        stage.setFullScreen(true);
+        this.mainpane = new BorderPane();
+        canvas = new ResizableCanvas(g -> draw(g), mainpane);
+        mainpane.setCenter(canvas);
         canvas.resize(500, 820);
         FXGraphics2D g2d = new FXGraphics2D(canvas.getGraphicsContext2D());
         new AnimationTimer() {
@@ -54,9 +64,9 @@ public class GameController extends Application{
         });
         canvas.setFocusTraversable(true); // make sure we have focus for key events
 
-        Scene scene = new Scene(mainPane, 1000, 1000);
+        Scene scene = new Scene(mainpane);
         stage.setScene(scene);
-        stage.setTitle("Spelletje");
+        stage.setTitle("Player: " + client.getName() + " Port: " + client.getPort());
         stage.show();
         stage.setResizable(false);
         //draw(g2d);
@@ -65,8 +75,8 @@ public class GameController extends Application{
 
 
 
-    public void init() {
-        this.game = new Game(null);
+    public void init(ShooterClient client) {
+        this.game = new Game(client);
     }
 
     private void draw(FXGraphics2D g2d) {
@@ -76,11 +86,7 @@ public class GameController extends Application{
     }
 
     private void update(double deltaTime) {
+        this.game.setGameObjects(this.client.getServerData());
         this.game.update(deltaTime);
     }
-
-    public static void main(String[] args) {
-        Application.launch(GameController.class);
-    }
-
 }

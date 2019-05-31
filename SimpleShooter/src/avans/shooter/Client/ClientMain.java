@@ -1,5 +1,6 @@
 package avans.shooter.Client;
 
+import avans.shooter.Client.UIScenes.GameScreen;
 import avans.shooter.Client.UIScenes.LobbyScreen;
 import avans.shooter.Client.UIScenes.LoginScreen;
 import javafx.application.Application;
@@ -30,7 +31,8 @@ public class ClientMain extends Application {
 
 
     public void startGame(ShooterClient client) {
-
+        System.out.println("game oppened");
+        new GameScreen(client, this).loadScene(primaryStage);
     }
 
     public void openLobby(ShooterClient client) {
