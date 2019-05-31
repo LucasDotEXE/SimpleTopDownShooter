@@ -1,5 +1,7 @@
 package avans.shooter.ConnectionTools.Request;
 
-public enum RequestType {
-    lobbyStatus, playerPos, totalgame
+import java.io.Serializable;
+
+public enum RequestType implements Serializable {
+    lobbyStatus, stuff
 }

@@ -1,7 +1,7 @@
 package avans.shooter.Client.Game;
 
-import javafx.scene.input.KeyEvent;
-import org.jfree.fx.ResizableCanvas;
+
+import avans.shooter.Client.ShooterClient;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -9,10 +9,11 @@ import java.util.ArrayList;
 public class Game implements GameObject{
 
     private ArrayList<GameObject> gameObjects;
+//    private Map map;
     private Player player;
 
-    public Game() {
-        this.player = new Player(10,40,  10, 2);
+    public Game(ShooterClient client) {
+        this.player = new Player(10,40,  10, 2, client);
         this.gameObjects = new ArrayList<>();
     }
 
@@ -22,7 +23,11 @@ public class Game implements GameObject{
     }
 
     public void update(double deltatime) {
-        this.gameObjects.forEach(gameObject -> gameObject.update(deltatime));
+//        this.gameObjects.forEach(gameObject -> gameObject.update(deltatime));
         this.player.update(deltatime);
+    }
+
+    public void setGameObjects(ArrayList<GameObject> gameObjects) {
+        this.gameObjects = gameObjects;
     }
 }

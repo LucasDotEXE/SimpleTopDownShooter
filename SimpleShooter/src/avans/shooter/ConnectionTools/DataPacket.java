@@ -3,7 +3,9 @@ package avans.shooter.ConnectionTools;
 import avans.shooter.ConnectionTools.Responce.ResponceType;
 import avans.shooter.ConnectionTools.Request.RequestType;
 
-public abstract class DataPacket {
+import java.io.Serializable;
+
+public abstract class DataPacket implements Serializable {
 
 
     private ResponceType responceType;

@@ -6,7 +6,7 @@ import javafx.scene.input.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-class MultyKeyLisner {
+public class MultyKeyLisner {
 
     // Set of currently pressed keys
     private final HashSet<KeyCode> pressed = new HashSet<>();

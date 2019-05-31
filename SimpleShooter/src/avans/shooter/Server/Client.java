@@ -33,15 +33,21 @@ public class Client implements Runnable {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+
+
     }
 
     @Override
     public void run() {
         try {
+            System.out.println("making inputsteam");
             this.in  = new ObjectInputStream( this.socket.getInputStream() );
+            System.out.println("making outputstream");
             this.out = new ObjectOutputStream( this.socket.getOutputStream() );
 
-            out.writeUTF("ShooterServer 1.0.0");
+            out.writeObject("ShooterServer 1.0.0");
+            System.out.println("sent shooterId");
+            this.name = (String) in.readObject();
             System.out.println("(E) " + this.name + " joined the Server!");
 
             String message = "";
@@ -52,7 +58,7 @@ public class Client implements Runnable {
                         RequestHandler.handle((Request) data, this.server);
                     } else {
                         if (data.isResponce()) {
-                            ResponceHandler.handle((Responce) data, this.server);
+                            ResponceHandler.handle((Responce) data, this.server, this);
                         }
                     }
 
@@ -70,13 +76,25 @@ public class Client implements Runnable {
             this.socket.close();
 
         } catch (SocketException e) {
-            System.out.println("cought wrong");
-            e.printStackTrace();
+            System.out.println(this.name + " Disconnected");
+            this.server.removeClient(this);
         } catch (IOException e) {
-            System.out.println("Cought right");
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
 
+    public synchronized void sentDataPacket(DataPacket dataPacket) {
+        try {
+            this.out.writeObject(dataPacket);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getName() {
+        return name;
     }
 }
 

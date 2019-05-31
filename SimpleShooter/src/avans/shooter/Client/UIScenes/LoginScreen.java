@@ -37,9 +37,7 @@ public class LoginScreen implements LoadableScene {
         intitComponents();
         formatAll();
         setFunction();
-
         this.parent = clientMain;
-
     }
 
     private void setFunction() {
@@ -58,6 +56,10 @@ public class LoginScreen implements LoadableScene {
             this.portField.setText("");
             alert.showAndWait();
         }
+        });
+
+        this.close.setOnAction(event -> {
+            System.exit(0);
         });
     }
 
@@ -107,7 +109,6 @@ public class LoginScreen implements LoadableScene {
 
     @Override
     public void loadScene(Stage primaryStage) {
-        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setScene(new Scene(layout, 175, 155));
     }
 

@@ -1,20 +1,29 @@
 package avans.shooter.Client.Game;
 
+import avans.shooter.Client.ShooterClient;
+import avans.shooter.Client.UIScenes.GameScreen;
+import avans.shooter.ConnectionTools.Responce.Responce;
+import avans.shooter.ConnectionTools.Responce.ResponceType;
 import javafx.scene.input.KeyCode;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
+import java.io.Serializable;
+import java.util.ArrayList;
 
-public class Player implements GameObject{
+public class Player implements GameObject, Serializable {
+
+    private transient ShooterClient shooterClient;
 
     private Point2D position;
     private double diameter;
     private int speed;
 
 
-    public Player(int x, int y, int d, int s){
+    public Player(int x, int y, int d, int s, ShooterClient client){
+        this.shooterClient = client;
         this.position = new Point2D.Double(x,y);
         this.diameter = d;
         this.speed = s;
@@ -30,8 +39,10 @@ public class Player implements GameObject{
 
     @Override
     public void update(double deltatime) {
-        GameController.keyLisner.getKeys().forEach(keyCode -> {
+        GameScreen.keyLisner.getKeys().forEach(keyCode -> {
             moveInDirection(keyCode, deltatime);
+            shooterClient.sentDataPacket(new Responce<Player>(new Player((int)this.position.getX(), (int)this.position.getY(),
+                    (int)this.diameter, this.speed, this.shooterClient), ResponceType.player));
         });
     }
 
@@ -49,6 +60,10 @@ public class Player implements GameObject{
 
     public void setPosition(int x, int y) {
         this.position.setLocation(x, y);
+    }
+
+    public Point2D getPos() {
+        return this.position;
     }
 
 //    public void setDirection(String di) {
