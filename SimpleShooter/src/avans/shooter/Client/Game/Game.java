@@ -30,4 +30,8 @@ public class Game implements GameObject{
     public void setGameObjects(ArrayList<GameObject> gameObjects) {
         this.gameObjects = gameObjects;
     }
+
+    public Player getPlayer() {
+        return this.player;
+    }
 }

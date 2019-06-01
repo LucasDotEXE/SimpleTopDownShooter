@@ -10,8 +10,8 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Player implements GameObject, Serializable {
 
@@ -20,30 +20,67 @@ public class Player implements GameObject, Serializable {
     private Point2D position;
     private double diameter;
     private int speed;
+    private double rotation;
+    private Point2D mouse;
 
 
     public Player(int x, int y, int d, int s, ShooterClient client){
+        this.mouse = new Point2D.Double(x, y);
+        this.rotation = 0;
         this.shooterClient = client;
-        this.position = new Point2D.Double(x,y);
+        this.position = new Point2D.Double(x, y);
         this.diameter = d;
         this.speed = s;
+    }
+
+    public Player(int x, int y, int d, int s, double rotation, ShooterClient client) {
+        this.shooterClient = client;
+        this.position = new Point2D.Double(x, y);
+        this.diameter = d;
+        this.speed = s;
+        this.rotation = rotation;
     }
 
     @Override
     public void draw(Graphics2D g2d) {
         AffineTransform af = new AffineTransform();
-        af.setToTranslation(this.position.getX(), this.position.getY());
-        Ellipse2D player = new Ellipse2D.Double(this.position.getX() - this.diameter/2, this.position.getY() - this.diameter/2, this.diameter, this.diameter);
-        g2d.fill(player);
+        af.translate(0, 0);
+        af.rotate(this.getRotation());
+        af.translate(-diameter/2, -diameter/2);
+
+        Shape player = af.createTransformedShape(new Ellipse2D.Double(0, 0, this.diameter, this.diameter));
+        Shape gun = af.createTransformedShape(new Rectangle2D.Double(this.diameter/3, this.diameter/2, this.diameter/3, this.diameter));
+        AffineTransform pos = new AffineTransform();
+        pos.translate(this.position.getX(), this.position.getY());
+
+        g2d.fill(pos.createTransformedShape(player));
+        g2d.fill(pos.createTransformedShape(gun));
     }
 
     @Override
     public void update(double deltatime) {
         GameScreen.keyLisner.getKeys().forEach(keyCode -> {
             moveInDirection(keyCode, deltatime);
-            shooterClient.sentDataPacket(new Responce<Player>(new Player((int)this.position.getX(), (int)this.position.getY(),
-                    (int)this.diameter, this.speed, this.shooterClient), ResponceType.player));
         });
+        this.rotation = angleOf(this.position, this.mouse);
+        shooterClient.sentDataPacket(new Responce<Player>(new Player((int)this.position.getX(), (int)this.position.getY(),
+                (int)this.diameter, this.speed, this.rotation, this.shooterClient), ResponceType.player));
+//        System.out.println(this.rotation);
+
+    }
+
+    public double angleOf(Point2D target, Point2D mouse) {
+
+        Point2D diff = new Point2D.Double(mouse.getX() - target.getX(), mouse.getY() - target.getY());
+        double targetAngle = Math.atan2(diff.getY(), diff.getX()) - Math.PI/2;
+
+        while (targetAngle > Math.PI)
+            targetAngle -= 2 * Math.PI;
+
+        while (targetAngle < -Math.PI)
+            targetAngle += 2 * Math.PI;
+
+        return targetAngle;
     }
 
     private void moveInDirection(KeyCode direction, double deltatime) {
@@ -64,6 +101,14 @@ public class Player implements GameObject, Serializable {
 
     public Point2D getPos() {
         return this.position;
+    }
+
+    public double getRotation() {
+        return rotation;
+    }
+
+    public void setMousePos(Point2D point2D) {
+        this.mouse = point2D;
     }
 
 //    public void setDirection(String di) {

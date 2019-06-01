@@ -13,6 +13,7 @@ import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class GameScreen implements LoadableScene {
@@ -37,7 +38,7 @@ public class GameScreen implements LoadableScene {
         this.mainpane = new BorderPane();
         canvas = new ResizableCanvas(g -> draw(g), mainpane);
         mainpane.setCenter(canvas);
-        canvas.resize(500, 820);
+        canvas.resize(1000, 1000);
         FXGraphics2D g2d = new FXGraphics2D(canvas.getGraphicsContext2D());
         new AnimationTimer() {
             long last = -1;
@@ -63,12 +64,15 @@ public class GameScreen implements LoadableScene {
 //            keyLisner.getKeys().forEach(keyCode -> System.out.println(keyCode.getName()));
         });
         canvas.setFocusTraversable(true); // make sure we have focus for key events
+        canvas.setOnMouseMoved(event -> {
+            game.getPlayer().setMousePos(new Point2D.Double(event.getX(), event.getY()));
+        });
 
         Scene scene = new Scene(mainpane);
         stage.setScene(scene);
         stage.setTitle("Player: " + client.getName() + " Port: " + client.getPort());
         stage.show();
-        stage.setResizable(false);
+        stage.setResizable(true);
         //draw(g2d);
 
     }
