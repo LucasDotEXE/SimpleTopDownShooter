@@ -38,7 +38,7 @@ public class ResponceHandler {
         responce.forEach(bullets -> {
             bullets.forEach(bullet -> bulets.add(bullet));
         });
-
+//        System.out.println(bulets + "array       data" + responce);
         client.setOtherBullets(bulets);
     }
 

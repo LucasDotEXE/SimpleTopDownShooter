@@ -30,9 +30,13 @@ public class Game implements GameObject{
     }
 
     public void update(double deltatime) {
-//       this.gameObjects.forEach(gameObject -> gameObject.update(deltatime));
+       this.gameObjects.forEach(gameObject -> {
+           if (gameObject.getClass() == Bullet.class) {
+               gameObject.update(deltatime);
+           }
+       });
         this.bullets.forEach(bullet -> bullet.update(deltatime));
-        this.client.sentDataPacket(new Responce<ArrayList<Bullet>>(this.bullets, ResponceType.bullet));
+        this.client.sentDataPacket(new Responce<ArrayList<Bullet>>(new ArrayList<>(this.bullets), ResponceType.bullet));
         this.player.update(deltatime);
     }
 

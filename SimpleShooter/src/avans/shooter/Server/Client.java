@@ -87,7 +87,8 @@ public class Client implements Runnable {
 
     public synchronized void sentDataPacket(DataPacket dataPacket) {
         try {
-            this.out.writeObject(dataPacket);
+            if (dataPacket != null && this.out != null)
+                this.out.writeObject(dataPacket);
         } catch (IOException e) {
             e.printStackTrace();
         }
