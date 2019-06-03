@@ -68,6 +68,10 @@ public class GameScreen implements LoadableScene {
             game.getPlayer().setMousePos(new Point2D.Double(event.getX(), event.getY()));
         });
 
+        canvas.setOnMouseClicked(event -> {
+            game.getPlayer().shoot();
+        });
+
         Scene scene = new Scene(mainpane);
         stage.setScene(scene);
         stage.setTitle("Player: " + client.getName() + " Port: " + client.getPort());

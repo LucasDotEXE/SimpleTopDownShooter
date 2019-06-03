@@ -15,13 +15,13 @@ public class Bullet implements GameObject, Serializable {
     private Point2D position;
     private Boolean hit = false;
     private double diameter;
-    private int speed;
+    private Point2D dirVect;
 
-    public Bullet(int x, int y, int d, int s, ShooterClient client) {
+    public Bullet(int x, int y, Point2D dirVect, ShooterClient client) {
         this.position = new Point2D.Double(x, y);
         this.shooterClient = client;
-        this.diameter = d;
-        this.speed = s;
+        this.diameter = 10;
+        this.dirVect = dirVect;
     }
 
     @Override
@@ -40,8 +40,8 @@ public class Bullet implements GameObject, Serializable {
     public void update(double deltatime) {
         if (!hit) {
             this.position = new Point2D.Double(this.position.getX(), this.position.getY() - 5.0D * (deltatime / 5000.0D));
-            shooterClient.sentDataPacket(new Responce<Bullet>(new Bullet((int) this.position.getX(), (int) this.position.getY(),
-                    (int)this.diameter, this.speed, this.shooterClient),ResponceType.bullet));
+//            shooterClient.sentDataPacket(new Responce<Bullet>(new Bullet((int) this.position.getX(), (int) this.position.getY(),
+//                     this.dirVect, this.shooterClient),ResponceType.bullet));
         }
     }
 

@@ -12,7 +12,6 @@ public class ResponceHandler {
 //                Player player = (Player) data.getData();
 //                System.out.println("handle: " + client.getName() + " pos: " + player.getPos());
                 server.getGameData().putPlayer(client.getName(), (Player) data.getData());
-                System.out.println();
                 break;
             }
         }
