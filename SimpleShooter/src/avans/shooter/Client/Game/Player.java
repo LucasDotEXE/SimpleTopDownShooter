@@ -18,11 +18,11 @@ public class Player implements GameObject, Serializable {
 
     private transient ShooterClient shooterClient;
 
-    private Point2D position;
+    private Point2D.Double position;
     private double diameter;
     private int speed;
     private double rotation;
-    private Point2D mouse;
+    private Point2D.Double mouse;
     private ArrayList<Bullet> bullets;
     private Boolean hit = false;
 
@@ -106,7 +106,7 @@ public class Player implements GameObject, Serializable {
     }
 
     public void shoot() {
-        Bullet bullet = new Bullet((int)this.position.getX(), (int)this.position.getY() , getBulletMath(), shooterClient);
+        Bullet bullet = new Bullet((int)this.position.getX(), (int)this.position.getY() , angleOf(this.position, this.mouse), shooterClient);
         this.bullets.add(bullet);
     }
 
@@ -114,21 +114,30 @@ public class Player implements GameObject, Serializable {
         double xDiff = this.mouse.getX() - this.position.getX();
         double yDiff = this.mouse.getY() - this.position.getY();
 
-        int x;
-        int y;
 
+        System.out.println(xDiff + "x   y" + yDiff);
         if (xDiff < 0) {
-            x = -1;
+            while (xDiff < -1) {
+                xDiff+=1.0;
+            }
         } else {
-            x = 1;
+            while (xDiff > 1) {
+                xDiff -=1.0;
+            }
         }
         if (yDiff < 0) {
-            y = -1;
+            while (yDiff < -1) {
+                yDiff+=1.0;
+            }
         } else {
-            y = 1;
+            while (yDiff > 1) {
+                yDiff -=1.0;
+            }
         }
 
-        return new Point2D.Double(x, y);
+        System.out.println(xDiff + "x   y" + yDiff);
+
+        return new Point2D.Double(xDiff, yDiff);
     }
 
     public void hit(Player p, Bullet b){
@@ -155,7 +164,7 @@ public class Player implements GameObject, Serializable {
         return rotation;
     }
 
-    public void setMousePos(Point2D point2D) {
+    public void setMousePos(Point2D.Double point2D) {
         this.mouse = point2D;
     }
 
