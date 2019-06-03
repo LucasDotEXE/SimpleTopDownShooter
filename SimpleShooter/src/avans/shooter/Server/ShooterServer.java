@@ -97,15 +97,15 @@ public class ShooterServer {
         }
     }
 
-    public void updateBulletPos(HashMap<String, Bullet> bulletHashMap){
-        for (Client client : this.clients){
-            ArrayList<Bullet> bullets = new ArrayList<>();
-            bulletHashMap.forEach((s, bullet) ->{
+    public void updatePlayerBullets(HashMap<String, ArrayList<Bullet>> bulletHashMap) {
+        for (Client client: this.clients) {
+            ArrayList<ArrayList<Bullet>> players = new ArrayList();
+            bulletHashMap.forEach((s, Bullet) -> {
                 if (s != client.getName()){
-                    bullets.add(bullet);
+                    players.add(Bullet);
                 }
             });
-            client.sentDataPacket(new Responce<ArrayList<Bullet>>(bullets, ResponceType.bullet));
+            client.sentDataPacket(new Responce<ArrayList<ArrayList<Bullet>>>(players, ResponceType.bullet));
         }
     }
 }

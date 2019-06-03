@@ -28,16 +28,17 @@ public class Player implements GameObject, Serializable {
 
 
     public Player(int x, int y, int d, int s, ShooterClient client){
+        this.bullets = new ArrayList<>();
         this.mouse = new Point2D.Double(x, y);
         this.rotation = 0;
         this.shooterClient = client;
         this.position = new Point2D.Double(x, y);
         this.diameter = d;
         this.speed = s;
-        this.bullets = new ArrayList<>();
     }
 
     public Player(int x, int y, int d, int s, double rotation, ShooterClient client) {
+        this.bullets = new ArrayList<>();
         this.shooterClient = client;
         this.position = new Point2D.Double(x, y);
         this.diameter = d;
@@ -69,12 +70,12 @@ public class Player implements GameObject, Serializable {
             moveInDirection(keyCode, deltatime);
         });
         this.rotation = angleOf(this.position, this.mouse);
-        shooterClient.sentDataPacket(new Responce<Player>(new Player((int)this.position.getX(), (int)this.position.getY(),
-                (int)this.diameter, this.speed, this.rotation, this.shooterClient), ResponceType.player));
         if (this.bullets.size() > 20) {
             this.bullets.remove(0);
         }
         this.bullets.forEach(bullet -> bullet.update(deltatime));
+        shooterClient.sentDataPacket(new Responce<Player>(new Player((int)this.position.getX(), (int)this.position.getY(),
+                (int)this.diameter, this.speed, this.rotation, this.shooterClient), ResponceType.player));
     }
 
     public double angleOf(Point2D target, Point2D mouse) {
@@ -105,40 +106,11 @@ public class Player implements GameObject, Serializable {
         } else setPosition((int) this.position.getX(), (int) this.position.getY());
     }
 
-    public void shoot() {
+    public Bullet shoot() {
         Bullet bullet = new Bullet((int)this.position.getX(), (int)this.position.getY() , angleOf(this.position, this.mouse), shooterClient);
-        this.bullets.add(bullet);
+        return bullet;
     }
 
-    private Point2D getBulletMath() {
-        double xDiff = this.mouse.getX() - this.position.getX();
-        double yDiff = this.mouse.getY() - this.position.getY();
-
-
-        System.out.println(xDiff + "x   y" + yDiff);
-        if (xDiff < 0) {
-            while (xDiff < -1) {
-                xDiff+=1.0;
-            }
-        } else {
-            while (xDiff > 1) {
-                xDiff -=1.0;
-            }
-        }
-        if (yDiff < 0) {
-            while (yDiff < -1) {
-                yDiff+=1.0;
-            }
-        } else {
-            while (yDiff > 1) {
-                yDiff -=1.0;
-            }
-        }
-
-        System.out.println(xDiff + "x   y" + yDiff);
-
-        return new Point2D.Double(xDiff, yDiff);
-    }
 
     public void hit(Player p, Bullet b){
         if (p.getX() == b.getX() && p.getY() == b.getY()){
@@ -147,10 +119,6 @@ public class Player implements GameObject, Serializable {
     }
 
 
-
-    public ArrayList<Bullet> getBullets() {
-        return this.bullets;
-    }
 
     public void setPosition(int x, int y) {
         this.position.setLocation(x, y);

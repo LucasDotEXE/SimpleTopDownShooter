@@ -69,7 +69,7 @@ public class GameScreen implements LoadableScene {
         });
 
         canvas.setOnMouseClicked(event -> {
-            game.getPlayer().shoot();
+            game.shoot();
         });
 
         Scene scene = new Scene(mainpane);

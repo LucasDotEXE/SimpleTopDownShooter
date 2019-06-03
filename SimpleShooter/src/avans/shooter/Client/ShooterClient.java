@@ -98,8 +98,9 @@ public class ShooterClient implements Serializable {
                         }
                     }
                 } catch (IOException e) {
-                    System.out.println("Error ### IO Exception");
                     e.printStackTrace();
+                    System.out.println("Error ### Lost connection");
+                    System.exit(0);
                 } catch (ClassNotFoundException e) {
                     System.out.println("Sent class was not a DataPacket");
                     e.printStackTrace();
@@ -124,6 +125,7 @@ public class ShooterClient implements Serializable {
         ArrayList<GameObject> serverData = new ArrayList<>();
         if (this.otherPlayers != null) {
             serverData.addAll(this.otherPlayers);
+            serverData.addAll(this.otherBullets);
         }
         return serverData;
     }

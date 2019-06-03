@@ -1,6 +1,8 @@
 package avans.shooter.Client.Game;
 
 import avans.shooter.Client.ShooterClient;
+import avans.shooter.ConnectionTools.Responce.Responce;
+import avans.shooter.ConnectionTools.Responce.ResponceType;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -40,7 +42,7 @@ public class Bullet implements GameObject, Serializable {
         if (!hit) {
             this.position = new Point2D.Double(this.position.getX() + Math.cos(this.angle)  * (deltatime / 5000.0D), this.position.getY() + Math.sin(this.angle) * (deltatime / 5000.0D));
 //            shooterClient.sentDataPacket(new Responce<Bullet>(new Bullet((int) this.position.getX(), (int) this.position.getY(),
-//                     this.dirVect, this.shooterClient),ResponceType.bullet));
+//                     this.angle, this.shooterClient), ResponceType.bullet));
         }
     }
 

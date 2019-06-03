@@ -33,7 +33,13 @@ public class ResponceHandler {
     }
 
     private static void bulletResponce(Responce data, ShooterClient client) {
-        client.setOtherBullets((ArrayList<Bullet>) data.getData());
+        ArrayList<Bullet> bulets = new ArrayList<>();
+        ArrayList<ArrayList<Bullet>> responce = (ArrayList<ArrayList<Bullet>>) data.getData();
+        responce.forEach(bullets -> {
+            bullets.forEach(bullet -> bulets.add(bullet));
+        });
+
+        client.setOtherBullets(bulets);
     }
 
     private static void lobbyResponce(Responce data, ShooterClient client) {
