@@ -1,5 +1,6 @@
 package avans.shooter.Client;
 
+import avans.shooter.Client.Game.Bullet;
 import avans.shooter.Client.Game.GameObject;
 import avans.shooter.Client.Game.Player;
 import avans.shooter.Client.UIScenes.LobbyScreen;
@@ -25,12 +26,14 @@ public class ShooterClient implements Serializable {
 
     private transient ArrayList<GameObject> serverData;
     private transient  ArrayList<Player> otherPlayers;
+    private transient  ArrayList<Bullet> otherBullets;
 
     private transient LobbyScreen lobby;
 
     public ShooterClient(int port, String host, String name) {
         this.serverData = new ArrayList<>();
         this.otherPlayers = new ArrayList<>();
+        this.otherBullets = new ArrayList<>();
         this.port = port;
         this.host = host;
         this.name = name;
@@ -127,6 +130,10 @@ public class ShooterClient implements Serializable {
 
     public synchronized void setOtherPlayers(ArrayList<Player> players) {
         this.otherPlayers = players;
+    }
+
+    public synchronized void setOtherBullets(ArrayList<Bullet> bullets) {
+        this.otherBullets = bullets;
     }
 
 }

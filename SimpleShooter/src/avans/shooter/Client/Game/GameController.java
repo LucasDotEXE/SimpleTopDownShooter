@@ -13,12 +13,7 @@ import java.awt.*;
 
 public class GameController extends Application{
 
-
-
     private Game game;
-
-
-
     private ResizableCanvas canvas;
     public static MultyKeyLisner keyLisner;
 
@@ -62,8 +57,6 @@ public class GameController extends Application{
         //draw(g2d);
 
     }
-
-
 
     public void init() {
         this.game = new Game(null);

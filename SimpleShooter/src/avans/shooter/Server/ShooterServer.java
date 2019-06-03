@@ -1,5 +1,6 @@
 package avans.shooter.Server;
 
+import avans.shooter.Client.Game.Bullet;
 import avans.shooter.Client.Game.Player;
 import avans.shooter.ConnectionTools.Responce.Responce;
 import avans.shooter.ConnectionTools.Responce.ResponceType;
@@ -17,9 +18,7 @@ public class ShooterServer {
     private Thread serverThread;
     private ArrayList<Client> clients;
     private ArrayList<Thread> threads;
-
     private ServerGameData gameData;
-
 
     public ShooterServer(int port) {
         this.gameData = new ServerGameData(this);
@@ -95,6 +94,18 @@ public class ShooterServer {
                 }
             });
             client.sentDataPacket(new Responce<ArrayList<Player>>(players, ResponceType.player));
+        }
+    }
+
+    public void updateBulletPos(HashMap<String, Bullet> bulletHashMap){
+        for (Client client : this.clients){
+            ArrayList<Bullet> bullets = new ArrayList<>();
+            bulletHashMap.forEach((s, bullet) ->{
+                if (s != client.getName()){
+                    bullets.add(bullet);
+                }
+            });
+            client.sentDataPacket(new Responce<ArrayList<Bullet>>(bullets, ResponceType.bullet));
         }
     }
 }

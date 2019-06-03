@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 public abstract class DataPacket implements Serializable {
 
-
     private ResponceType responceType;
     private RequestType requestType;
 

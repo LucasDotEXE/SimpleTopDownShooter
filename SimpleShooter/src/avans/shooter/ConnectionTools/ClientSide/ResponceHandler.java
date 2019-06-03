@@ -1,5 +1,6 @@
 package avans.shooter.ConnectionTools.ClientSide;
 
+import avans.shooter.Client.Game.Bullet;
 import avans.shooter.Client.Game.Player;
 import avans.shooter.Client.ShooterClient;
 import avans.shooter.ConnectionTools.Responce.Responce;
@@ -19,12 +20,20 @@ public class ResponceHandler {
                 playerResponce(data, client);
                 break;
             }
+            case bullet: {
+                bulletResponce(data, client);
+                break;
+            }
 
         }
     }
 
     private static void playerResponce(Responce data, ShooterClient client) {
         client.setOtherPlayers((ArrayList<Player>) data.getData());
+    }
+
+    private static void bulletResponce(Responce data, ShooterClient client) {
+        client.setOtherBullets((ArrayList<Bullet>) data.getData());
     }
 
     private static void lobbyResponce(Responce data, ShooterClient client) {

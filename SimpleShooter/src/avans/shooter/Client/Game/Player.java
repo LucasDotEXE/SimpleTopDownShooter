@@ -12,6 +12,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Player implements GameObject, Serializable {
 
@@ -22,6 +23,8 @@ public class Player implements GameObject, Serializable {
     private int speed;
     private double rotation;
     private Point2D mouse;
+    private ArrayList<Bullet> bullets = new ArrayList<>();
+    private Boolean hit = false;
 
 
     public Player(int x, int y, int d, int s, ShooterClient client){
@@ -55,6 +58,7 @@ public class Player implements GameObject, Serializable {
 
         g2d.fill(pos.createTransformedShape(player));
         g2d.fill(pos.createTransformedShape(gun));
+
     }
 
     @Override
@@ -65,7 +69,10 @@ public class Player implements GameObject, Serializable {
         this.rotation = angleOf(this.position, this.mouse);
         shooterClient.sentDataPacket(new Responce<Player>(new Player((int)this.position.getX(), (int)this.position.getY(),
                 (int)this.diameter, this.speed, this.rotation, this.shooterClient), ResponceType.player));
-//        System.out.println(this.rotation);
+        System.out.println(this.rotation);
+        if (this.bullets.size() > 100) {
+            this.bullets.remove(0);
+        }
 
     }
 
@@ -91,8 +98,25 @@ public class Player implements GameObject, Serializable {
         } else  if (direction == KeyCode.W && this.position.getY() > 10){
             setPosition((int) this.position.getX(), (int) this.position.getY() - (int)(this.speed*(deltatime/10000)));
         } else  if (direction == KeyCode.S && this.position.getY() < 1000) {
-            setPosition((int) this.position.getX(), (int) this.position.getY() + (int)(this.speed*(deltatime/10000)));
+            setPosition((int) this.position.getX(), (int) this.position.getY() + (int) (this.speed * (deltatime / 10000)));
+        } else if(direction == KeyCode.SPACE ){
+            this.shoot();
         } else setPosition((int) this.position.getX(), (int) this.position.getY());
+    }
+
+    public void shoot() {
+        Bullet bullet = new Bullet((int)this.position.getX(), (int)this.position.getY(),10,5,shooterClient);
+        this.bullets.add(bullet);
+    }
+
+    public void hit(Player p, Bullet b){
+        if (p.getX() == b.getX() && p.getY() == b.getY()){
+            this.position = null;
+        }
+    }
+
+    public ArrayList<Bullet> getBullets() {
+        return this.bullets;
     }
 
     public void setPosition(int x, int y) {
@@ -109,6 +133,14 @@ public class Player implements GameObject, Serializable {
 
     public void setMousePos(Point2D point2D) {
         this.mouse = point2D;
+    }
+
+    public int getX() {
+        return (int)this.position.getX();
+    }
+
+    public int getY() {
+        return (int)this.position.getY();
     }
 
 //    public void setDirection(String di) {
